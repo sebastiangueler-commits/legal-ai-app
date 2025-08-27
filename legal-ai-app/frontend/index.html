@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal AI - Análisis Predictivo y Generación de Documentos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-balance-scale"></i>
+                <span>Legal AI</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Inicio</a>
+                <a href="#analysis" class="nav-link">Análisis</a>
+                <a href="#search" class="nav-link">Búsqueda</a>
+                <a href="#documents" class="nav-link">Documentos</a>
+                <a href="#cases" class="nav-link">Casos</a>
+                <a href="#login" class="nav-link" id="login-link">Iniciar Sesión</a>
+                <a href="#register" class="nav-link" id="register-link">Registrarse</a>
+                <a href="#profile" class="nav-link hidden" id="profile-link">Perfil</a>
+                <a href="#logout" class="nav-link hidden" id="logout-link">Cerrar Sesión</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1>Inteligencia Artificial para el Derecho</h1>
+                    <p>Análisis predictivo de sentencias, búsqueda inteligente de jurisprudencia y generación automática de documentos legales</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="scrollToSection('analysis')">
+                            <i class="fas fa-chart-line"></i>
+                            Análisis Predictivo
+                        </button>
+                        <button class="btn btn-secondary" onclick="scrollToSection('search')">
+                            <i class="fas fa-search"></i>
+                            Buscar Jurisprudencia
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <i class="fas fa-robot"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analysis Section -->
+        <section id="analysis" class="section">
+            <div class="container">
+                <h2>Análisis Predictivo de Sentencias</h2>
+                <p class="section-description">Utiliza nuestro modelo de IA para predecir el resultado de casos legales basado en jurisprudencia similar</p>
+                
+                <div class="analysis-form">
+                    <div class="form-group">
+                        <label for="case-text">Texto del Caso:</label>
+                        <textarea id="case-text" placeholder="Describe los hechos del caso, las partes involucradas, la materia legal..."></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tribunal">Tribunal:</label>
+                            <select id="tribunal">
+                                <option value="">Seleccionar tribunal</option>
+                                <option value="CAMARA_NACIONAL_APELACIONES">Cámara Nacional de Apelaciones</option>
+                                <option value="SUPREMA_CORTE">Suprema Corte</option>
+                                <option value="TRIBUNAL_FEDERAL">Tribunal Federal</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="materia">Materia:</label>
+                            <select id="materia">
+                                <option value="">Seleccionar materia</option>
+                                <option value="estafa">Estafa</option>
+                                <option value="homicidio">Homicidio</option>
+                                <option value="robo">Robo</option>
+                                <option value="fraude">Fraude</option>
+                                <option value="derecho_civil">Derecho Civil</option>
+                                <option value="derecho_laboral">Derecho Laboral</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="analyzeCase()">
+                        <i class="fas fa-brain"></i>
+                        Analizar Caso
+                    </button>
+                </div>
+                
+                <div id="analysis-result" class="analysis-result hidden">
+                    <h3>Resultado del Análisis</h3>
+                    <div class="result-content">
+                        <div class="prediction">
+                            <h4>Predicción:</h4>
+                            <div class="prediction-value" id="prediction-value"></div>
+                            <div class="confidence" id="confidence"></div>
+                        </div>
+                        
+                        <div class="similar-cases">
+                            <h4>Jurisprudencia Similar:</h4>
+                            <div id="similar-cases-list"></div>
+                        </div>
+                        
+                        <div class="explanation">
+                            <h4>Explicación:</h4>
+                            <div id="explanation-text"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search Section -->
+        <section id="search" class="section">
+            <div class="container">
+                <h2>Buscador de Jurisprudencia</h2>
+                <p class="section-description">Encuentra sentencias relevantes usando búsqueda semántica y filtros avanzados</p>
+                
+                <div class="search-form">
+                    <div class="search-input">
+                        <input type="text" id="search-query" placeholder="Buscar por palabras clave, hechos, o conceptos legales...">
+                        <button class="btn btn-primary" onclick="searchJurisprudence()">
+                            <i class="fas fa-search"></i>
+                            Buscar
+                        </button>
+                    </div>
+                    
+                    <div class="search-filters">
+                        <div class="filter-group">
+                            <label for="search-tribunal">Tribunal:</label>
+                            <select id="search-tribunal">
+                                <option value="">Todos los tribunales</option>
+                                <option value="CAMARA_NACIONAL_APELACIONES">Cámara Nacional de Apelaciones</option>
+                                <option value="SUPREMA_CORTE">Suprema Corte</option>
+                                <option value="TRIBUNAL_FEDERAL">Tribunal Federal</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="search-materia">Materia:</label>
+                            <select id="search-materia">
+                                <option value="">Todas las materias</option>
+                                <option value="estafa">Estafa</option>
+                                <option value="homicidio">Homicidio</option>
+                                <option value="robo">Robo</option>
+                                <option value="fraude">Fraude</option>
+                                <option value="derecho_civil">Derecho Civil</option>
+                                <option value="derecho_laboral">Derecho Laboral</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="date-from">Desde:</label>
+                            <input type="date" id="date-from">
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="date-to">Hasta:</label>
+                            <input type="date" id="date-to">
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="search-results" class="search-results hidden">
+                    <h3>Resultados de la Búsqueda</h3>
+                    <div class="results-stats">
+                        <span id="results-count"></span>
+                    </div>
+                    <div id="results-list" class="results-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Document Generation Section -->
+        <section id="documents" class="section">
+            <div class="container">
+                <h2>Generador de Documentos Legales</h2>
+                <p class="section-description">Crea escritos legales profesionales usando plantillas inteligentes y IA generativa</p>
+                
+                <div class="document-form">
+                    <div class="form-group">
+                        <label for="document-type">Tipo de Documento:</label>
+                        <select id="document-type">
+                            <option value="">Seleccionar tipo</option>
+                            <option value="demanda">Demanda</option>
+                            <option value="contestacion">Contestación de Demanda</option>
+                            <option value="recurso">Recurso de Apelación</option>
+                            <option value="escrito">Escrito de Defensa</option>
+                            <option value="memorial">Memorial</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="case-details">Detalles del Caso:</label>
+                        <textarea id="case-details" placeholder="Describe los hechos, las partes, las pretensiones..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="upload-document">Subir Documento Base (opcional):</label>
+                        <input type="file" id="upload-document" accept=".pdf,.doc,.docx">
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="generateDocument()">
+                        <i class="fas fa-file-alt"></i>
+                        Generar Documento
+                    </button>
+                </div>
+                
+                <div id="document-result" class="document-result hidden">
+                    <h3>Documento Generado</h3>
+                    <div class="document-content">
+                        <div class="document-preview" id="document-preview"></div>
+                        <div class="document-actions">
+                            <button class="btn btn-secondary" onclick="downloadDocument()">
+                                <i class="fas fa-download"></i>
+                                Descargar
+                            </button>
+                            <button class="btn btn-primary" onclick="editDocument()">
+                                <i class="fas fa-edit"></i>
+                                Editar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cases Management Section -->
+        <section id="cases" class="section">
+            <div class="container">
+                <h2>Gestión de Casos</h2>
+                <p class="section-description">Administra tus casos legales y mantén un seguimiento organizado</p>
+                
+                <div class="cases-actions">
+                    <button class="btn btn-primary" onclick="showNewCaseForm()">
+                        <i class="fas fa-plus"></i>
+                        Nuevo Caso
+                    </button>
+                    <button class="btn btn-secondary" onclick="refreshCases()">
+                        <i class="fas fa-sync"></i>
+                        Actualizar
+                    </button>
+                </div>
+                
+                <div id="new-case-form" class="new-case-form hidden">
+                    <h3>Crear Nuevo Caso</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="case-number">Número de Expediente:</label>
+                            <input type="text" id="case-number" placeholder="Ej: 34095/2024">
+                        </div>
+                        <div class="form-group">
+                            <label for="case-title">Título del Caso:</label>
+                            <input type="text" id="case-title" placeholder="Nombre del caso">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="case-description">Descripción:</label>
+                        <textarea id="case-description" placeholder="Descripción del caso..."></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="case-status">Estado:</label>
+                            <select id="case-status">
+                                <option value="iniciado">Iniciado</option>
+                                <option value="en_proceso">En Proceso</option>
+                                <option value="resuelto">Resuelto</option>
+                                <option value="archivado">Archivado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="case-priority">Prioridad:</label>
+                            <select id="case-priority">
+                                <option value="baja">Baja</option>
+                                <option value="media">Media</option>
+                                <option value="alta">Alta</option>
+                                <option value="urgente">Urgente</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn btn-primary" onclick="createCase()">Crear Caso</button>
+                        <button class="btn btn-secondary" onclick="cancelNewCase()">Cancelar</button>
+                    </div>
+                </div>
+                
+                <div id="cases-list" class="cases-list">
+                    <h3>Mis Casos</h3>
+                    <div id="cases-grid" class="cases-grid"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Modal -->
+        <div id="login-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('login-modal')">&times;</span>
+                <h2>Iniciar Sesión</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email:</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Contraseña:</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                </form>
+                <p>¿No tienes cuenta? <a href="#" onclick="showModal('register-modal')">Regístrate</a></p>
+            </div>
+        </div>
+
+        <!-- Register Modal -->
+        <div id="register-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('register-modal')">&times;</span>
+                <h2>Registrarse</h2>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-name">Nombre Completo:</label>
+                        <input type="text" id="register-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email:</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Contraseña:</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password">Confirmar Contraseña:</label>
+                        <input type="password" id="register-confirm-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                </form>
+                <p>¿Ya tienes cuenta? <a href="#" onclick="showModal('login-modal')">Inicia Sesión</a></p>
+            </div>
+        </div>
+
+        <!-- Profile Modal -->
+        <div id="profile-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('profile-modal')">&times;</span>
+                <h2>Mi Perfil</h2>
+                <div id="profile-info">
+                    <div class="profile-field">
+                        <label>Nombre:</label>
+                        <span id="profile-name"></span>
+                    </div>
+                    <div class="profile-field">
+                        <label>Email:</label>
+                        <span id="profile-email"></span>
+                    </div>
+                    <div class="profile-field">
+                        <label>Rol:</label>
+                        <span id="profile-role"></span>
+                    </div>
+                    <div class="profile-field">
+                        <label>Casos Activos:</label>
+                        <span id="profile-cases"></span>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" onclick="editProfile()">Editar Perfil</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Legal AI</h3>
+                    <p>Inteligencia artificial para el derecho</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Funcionalidades</h4>
+                    <ul>
+                        <li><a href="#analysis">Análisis Predictivo</a></li>
+                        <li><a href="#search">Búsqueda de Jurisprudencia</a></li>
+                        <li><a href="#documents">Generación de Documentos</a></li>
+                        <li><a href="#cases">Gestión de Casos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <p>Email: info@legalai.com</p>
+                    <p>Tel: +54 11 1234-5678</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Legal AI. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="loading-spinner hidden">
+        <div class="spinner"></div>
+        <p>Procesando...</p>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

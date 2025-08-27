@@ -1,0 +1,1 @@
+# Routers package for Legal AI Assistant
